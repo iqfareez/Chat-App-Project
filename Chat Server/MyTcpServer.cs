@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Chat_Server
 {
@@ -112,9 +113,18 @@ namespace Chat_Server
         /// <param name="message"></param>
         public void SendMessage(TcpClient client, string message)
         {
-            NetworkStream stream = client.GetStream();
-            byte[] buffer = Encoding.ASCII.GetBytes(message);
-            stream.Write(buffer, 0, buffer.Length);
+            try
+            {
+                NetworkStream stream = client.GetStream();
+                byte[] buffer = Encoding.ASCII.GetBytes(message);
+                stream.Write(buffer, 0, buffer.Length);
+            }
+            catch (Exception e)
+            {
+                // show error MessageBox
+                MessageBox.Show("Failed to send message. Perhaps the client has been disconnected?", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
         }
         
         

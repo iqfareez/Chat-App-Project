@@ -58,11 +58,12 @@ namespace Chat_Server
                     if (_clientCount == 0)
                     {
                         statusLabel.BackColor = Color.Orange;
+                        panel1.Enabled = false;
                         statusLabel.Text = "Server Online. Awaiting connection...";
                     }
                     else
                     {
-                        statusLabel.Text = $"Server Connected ({_clientCount})";
+                        statusLabel.Text = $"Server Connected";
                     }
                 }
                 
@@ -84,7 +85,6 @@ namespace Chat_Server
             // so i think this implementation is OK
             var clients = _server.Clients;
             _server.SendMessage(clients.Last(), inputMessageTextbox.Text);
-            
         }
     }
 }
