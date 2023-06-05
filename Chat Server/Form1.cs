@@ -10,6 +10,7 @@ namespace Chat_Server
     {
         private MyTcpServer _server;
         private int _clientCount;
+        private string _selectedImageFileName;
 
         public Form1()
         {
@@ -80,11 +81,36 @@ namespace Chat_Server
             // ignore if message is empty
             if (string.IsNullOrEmpty(inputMessageTextbox.Text)) return;
 
+            // Handle send image
+            if (inputMessageTextbox.Text.StartsWith("[Image]"))
+            {
+                MessageBox.Show(_selectedImageFileName);
+                
+                //TODO: Handle send image here
+                
+                inputMessageTextbox.Clear();
+                return;
+            }
+
             // Send message to last connected client
             // The requirement doesn't mention about handling multiple clients
             // so i think this implementation is OK
             var clients = _server.Clients;
             _server.SendMessage(clients.Last(), inputMessageTextbox.Text);
+            inputMessageTextbox.Clear();
+        }
+
+        private void openFileButton_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.Title = "Select image";
+            fileDialog.Filter = "Image Files (*.bmp;*.jpg;*.jpeg,*.png)|*.BMP;*.JPG;*.JPEG;*.PNG";
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                // show only the filename to save textfield space
+                inputMessageTextbox.Text = $"[Image] {fileDialog.SafeFileName}";
+                _selectedImageFileName = fileDialog.FileName;
+            }
         }
     }
 }
