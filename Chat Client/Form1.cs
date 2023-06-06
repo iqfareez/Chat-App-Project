@@ -104,6 +104,8 @@ namespace Chat_Client
 
                 inputMessageTextbox.Clear();
                 
+                chatView.ScrollToCaret();
+                
                 // restore editing capability of the textbox
                 inputMessageTextbox.ReadOnly = false;
                 return;
@@ -111,6 +113,7 @@ namespace Chat_Client
 
             AppendMessageToChatView(inputMessageTextbox.Text, User.Current);
             _chatClient.SendMessage(inputMessageTextbox.Text);
+            chatView.ScrollToCaret();
             inputMessageTextbox.Clear();
         }
 

@@ -65,12 +65,15 @@ namespace Chat_Server
                 // display the image in the Chat View
                 Bitmap myBitmap = new Bitmap(fileName);
                 AppendImageToChatView(myBitmap, User.Other);
+                
+                chatView.ScrollToCaret();
 
                 return;
             }
 
             // For normal message, append to the chat view
             AppendMessageToChatView(message.TrimEnd(), User.Other);
+            chatView.ScrollToCaret();
         }
 
         private void sendMessageButton_Click(object sender, EventArgs e)
@@ -90,6 +93,8 @@ namespace Chat_Server
 
                 inputMessageTextbox.Clear();
                 
+                chatView.ScrollToCaret();
+
                 // restore the editing capability of the textbox
                 inputMessageTextbox.ReadOnly = false;
                 return;
@@ -99,8 +104,12 @@ namespace Chat_Server
             // The requirement doesn't mention about handling multiple clients
             // so i think this implementation is OK
             AppendMessageToChatView(inputMessageTextbox.Text, User.Current);
-            var clients = _server.Clients;
-            _server.SendTextMessage(clients.Last(), inputMessageTextbox.Text);
+            var client = _server.Clients.Last();
+            _server.SendTextMessage(client, inputMessageTextbox.Text);
+            
+            chatView.ScrollToCaret();
+            
+            // clear the send message box
             inputMessageTextbox.Clear();
         }
 
