@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Windows.Forms;
 
@@ -138,13 +137,13 @@ namespace Chat_Client
                         // Make a box chat bubble
                         // Basically a text with background highlight
                         chatView.AppendText("  ");
-                        chatView.SelectionFont = new Font(chatView.Font.FontFamily, 14, FontStyle.Regular);
+                        chatView.SelectionFont = new Font(chatView.Font.FontFamily, 12, FontStyle.Regular);
                         chatView.SelectionBackColor = sendColor;
                         chatView.AppendText(" " + message + " ");
 
                         // Add time
                         chatView.SelectionBackColor = Color.Transparent;
-                        chatView.SelectionFont = new Font(chatView.Font.FontFamily, 10, FontStyle.Italic);
+                        chatView.SelectionFont = new Font(chatView.Font.FontFamily, 9, FontStyle.Italic);
                         chatView.AppendText($" {time}");
 
                         // Again, add 'padding' to the right
@@ -153,7 +152,7 @@ namespace Chat_Client
                         chatView.AppendText("😺");
 
                         // and finally, break using newline
-                        chatView.AppendText(Environment.NewLine);                        chatView.AppendText(Environment.NewLine);
+                        chatView.AppendText(Environment.NewLine);
                         chatView.AppendText(Environment.NewLine);
                     }
                 ));
@@ -198,6 +197,17 @@ namespace Chat_Client
                 chatView.AppendText(Environment.NewLine);
                 AppendMessageToChatView("Sent an image", user);
             }));
+        }
+
+
+        private void inputMessageTextbox_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Enter key to send message
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true; // disable 'ding' sound
+                sendMessageButton.PerformClick(); // 'Click' the send button
+            }
         }
     }
 }

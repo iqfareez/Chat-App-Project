@@ -99,6 +99,7 @@
             this.inputMessageTextbox.Name = "inputMessageTextbox";
             this.inputMessageTextbox.Size = new System.Drawing.Size(362, 28);
             this.inputMessageTextbox.TabIndex = 2;
+            this.inputMessageTextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.inputMessageTextbox_KeyDown);
             // 
             // sendMessageButton
             // 
@@ -128,9 +129,9 @@
             // connectButton
             // 
             this.connectButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.connectButton.Location = new System.Drawing.Point(406, 41);
+            this.connectButton.Location = new System.Drawing.Point(373, 41);
             this.connectButton.Name = "connectButton";
-            this.connectButton.Size = new System.Drawing.Size(101, 38);
+            this.connectButton.Size = new System.Drawing.Size(134, 38);
             this.connectButton.TabIndex = 6;
             this.connectButton.Text = "Connect";
             this.connectButton.UseVisualStyleBackColor = true;

@@ -99,6 +99,7 @@
             this.inputMessageTextbox.Name = "inputMessageTextbox";
             this.inputMessageTextbox.Size = new System.Drawing.Size(410, 28);
             this.inputMessageTextbox.TabIndex = 6;
+            this.inputMessageTextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.inputMessageTextbox_KeyDown);
             // 
             // menuStrip1
             // 
