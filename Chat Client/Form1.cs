@@ -103,6 +103,9 @@ namespace Chat_Client
                 AppendImageToChatView(myBitmap, User.Current);
 
                 inputMessageTextbox.Clear();
+                
+                // restore editing capability of the textbox
+                inputMessageTextbox.ReadOnly = false;
                 return;
             }
 
@@ -120,6 +123,7 @@ namespace Chat_Client
             {
                 // show only the filename to save textfield space
                 inputMessageTextbox.Text = $"[Image] {fileDialog.SafeFileName}";
+                inputMessageTextbox.ReadOnly = true;
                 _selectedImageFileName = fileDialog.FileName;
             }
         }
@@ -127,7 +131,7 @@ namespace Chat_Client
         private void AppendMessageToChatView(string message, User user)
         {
             var time = DateTime.Now.ToString("HH:mm");
-            chatView.Invoke((MethodInvoker)(() => 
+            chatView.Invoke((MethodInvoker)(() =>
                     {
                         // differentiate looks between user (Client vs Server)
                         Color sendColor = user == User.Current ? Color.Bisque : Color.Pink;
@@ -163,7 +167,7 @@ namespace Chat_Client
             chatView.Invoke((MethodInvoker)(() =>
             {
                 // chatView.AppendText(message + Environment.NewLine);
-                int maxWidth = 700;
+                int maxWidth = 500;
                 int maxHeight = 500;
 
                 int newWidth, newHeight;
@@ -185,6 +189,13 @@ namespace Chat_Client
                 Bitmap resized = new Bitmap(bitmap, new Size(newWidth, newHeight));
                 Clipboard.SetDataObject(resized);
                 DataFormats.Format myFormat = DataFormats.GetFormat(DataFormats.Bitmap);
+                
+                // by default, the chatview is in read-only mode
+                // but, to append image (by pasting it), we need to disable it first
+                chatView.ReadOnly = false;
+                
+                // move the caret to the end of the text
+                chatView.Select(chatView.Text.Length, 0);
 
                 if (chatView.CanPaste(myFormat))
                 {
@@ -193,6 +204,9 @@ namespace Chat_Client
 
                     chatView.Paste(myFormat);
                 }
+                
+                // restore the read-only mode
+                chatView.ReadOnly = true;
 
                 chatView.AppendText(Environment.NewLine);
                 AppendMessageToChatView("Sent an image", user);

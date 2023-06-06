@@ -61,8 +61,10 @@
             // chatView
             // 
             this.chatView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.chatView.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.chatView.Location = new System.Drawing.Point(9, 7);
             this.chatView.Name = "chatView";
+            this.chatView.ReadOnly = true;
             this.chatView.Size = new System.Drawing.Size(539, 298);
             this.chatView.TabIndex = 2;
             this.chatView.Text = "";
@@ -94,6 +96,7 @@
             // inputMessageTextbox
             // 
             this.inputMessageTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.inputMessageTextbox.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.inputMessageTextbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.inputMessageTextbox.Location = new System.Drawing.Point(44, 311);
             this.inputMessageTextbox.Name = "inputMessageTextbox";

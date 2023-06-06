@@ -89,6 +89,9 @@ namespace Chat_Server
                 AppendImageToChatView(myBitmap, User.Current);
 
                 inputMessageTextbox.Clear();
+                
+                // restore the editing capability of the textbox
+                inputMessageTextbox.ReadOnly = false;
                 return;
             }
 
@@ -110,6 +113,10 @@ namespace Chat_Server
             {
                 // show only the filename to save textfield space
                 inputMessageTextbox.Text = $"[Image] {fileDialog.SafeFileName}";
+                // prevent user form modifying the text input - just a UX thingy
+                inputMessageTextbox.ReadOnly = true;
+                
+                // record the selected image file path
                 _selectedImageFileName = fileDialog.FileName;
             }
         }
@@ -193,7 +200,7 @@ namespace Chat_Server
         {
             chatView.Invoke((MethodInvoker)(() =>
             {
-                int maxWidth = 700;
+                int maxWidth = 500;
                 int maxHeight = 500;
 
                 int newWidth, newHeight;
@@ -215,6 +222,11 @@ namespace Chat_Server
                 Bitmap resized = new Bitmap(bitmap, new Size(newWidth, newHeight));
                 Clipboard.SetDataObject(resized);
                 DataFormats.Format myFormat = DataFormats.GetFormat(DataFormats.Bitmap);
+                
+                chatView.ReadOnly = false; // enable editing to allow image pasting
+                
+                // move the caret to the end of the text
+                chatView.Select(chatView.Text.Length, 0);
 
                 if (chatView.CanPaste(myFormat))
                 {
@@ -223,6 +235,9 @@ namespace Chat_Server
 
                     chatView.Paste(myFormat);
                 }
+                
+                // disable editing again
+                chatView.ReadOnly = true;
             }));
             chatView.AppendText(Environment.NewLine);
             AppendMessageToChatView("Sent an image", user);
