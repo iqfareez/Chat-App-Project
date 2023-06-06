@@ -54,6 +54,7 @@
         </Compile>
         <Compile Include="MyChatClient.cs" />
         <Compile Include="MyFileUtility.cs" />
+        <Compile Include="MyHistoryManager.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <EmbeddedResource Include="Form1.resx">

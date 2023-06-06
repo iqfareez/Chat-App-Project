@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace Chat_Client
 {
-    internal enum User
+    public enum User
     {
         Current,
         Other,
@@ -14,10 +14,11 @@ namespace Chat_Client
 
     public partial class Form1 : Form
     {
-        private MyChatClient _chatClient = new MyChatClient();
+        private readonly MyChatClient _chatClient = new MyChatClient();
+        private MyHistoryManager _historyManager = new MyHistoryManager();
         private string _selectedImageFileName;
 
-        private bool isConnected = false;
+        private bool _isConnected = false;
 
         // private string messageReceived;
         public Form1()
@@ -47,10 +48,16 @@ namespace Chat_Client
                 Bitmap myBitmap = new Bitmap(fileName);
                 AppendImageToChatView(myBitmap, User.Other);
 
+                // record the image in the history
+                _historyManager.AddMessage($"[Image] Sent an image", User.Other);
+                
+                chatView.ScrollToCaret();
                 return;
             }
-
+            
             AppendMessageToChatView(message.TrimEnd(), User.Other);
+            chatView.ScrollToCaret();
+            _historyManager.AddMessage(message.TrimEnd(), User.Other);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -59,12 +66,12 @@ namespace Chat_Client
             var port = 5050;
 
             // If not yet connected, then try to connect the server io
-            if (!isConnected)
+            if (!_isConnected)
             {
                 try
                 {
                     _chatClient.Connect(ipAddress, port);
-                    isConnected = true;
+                    _isConnected = true;
                 }
                 catch (Exception exception)
                 {
@@ -82,7 +89,7 @@ namespace Chat_Client
                 _chatClient.Disconnect();
                 statusBar1.Text = "Disconnected";
                 connectButton.Text = "Connect";
-                isConnected = false;
+                _isConnected = false;
                 panel1.Enabled = false;
             }
         }
@@ -101,18 +108,18 @@ namespace Chat_Client
                 // add to chatView
                 Bitmap myBitmap = new Bitmap(_selectedImageFileName);
                 AppendImageToChatView(myBitmap, User.Current);
-
-                inputMessageTextbox.Clear();
-                
-                chatView.ScrollToCaret();
                 
                 // restore editing capability of the textbox
                 inputMessageTextbox.ReadOnly = false;
-                return;
+            }
+            else
+            {
+                // handle normal text message
+                _chatClient.SendMessage(inputMessageTextbox.Text);
+                AppendMessageToChatView(inputMessageTextbox.Text, User.Current);
             }
 
-            AppendMessageToChatView(inputMessageTextbox.Text, User.Current);
-            _chatClient.SendMessage(inputMessageTextbox.Text);
+            _historyManager.AddMessage(inputMessageTextbox.Text, User.Current);
             chatView.ScrollToCaret();
             inputMessageTextbox.Clear();
         }
@@ -224,6 +231,22 @@ namespace Chat_Client
             {
                 e.SuppressKeyPress = true; // disable 'ding' sound
                 sendMessageButton.PerformClick(); // 'Click' the send button
+            }
+        }
+
+        private void exportChatHistoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var currentDateTimestamp = DateTime.Now.ToString("dd-MM-yyyy_HH-mm");
+            var data = _historyManager.GetExportHistory();
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Text File (*.txt)|*.txt";
+            saveFileDialog.Title = "Save chat history";
+            saveFileDialog.FileName = $"ChatHistory-{currentDateTimestamp}.txt";
+            saveFileDialog.ShowDialog();
+            
+            if (saveFileDialog.FileName != "")
+            {
+                File.WriteAllText(saveFileDialog.FileName, data);
             }
         }
     }

@@ -68,6 +68,7 @@
             this.exportChatHistoryToolStripMenuItem.Name = "exportChatHistoryToolStripMenuItem";
             this.exportChatHistoryToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
             this.exportChatHistoryToolStripMenuItem.Text = "Export chat history...";
+            this.exportChatHistoryToolStripMenuItem.Click += new System.EventHandler(this.exportChatHistoryToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
