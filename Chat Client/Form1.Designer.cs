@@ -35,10 +35,10 @@
             this.exportChatHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.chatView = new System.Windows.Forms.RichTextBox();
             this.inputMessageTextbox = new System.Windows.Forms.TextBox();
             this.sendMessageButton = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.openFileButton = new System.Windows.Forms.Button();
             this.connectButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.statusBar1 = new System.Windows.Forms.StatusBar();
@@ -82,14 +82,14 @@
             this.infoToolStripMenuItem.Size = new System.Drawing.Size(113, 24);
             this.infoToolStripMenuItem.Text = "Info...";
             // 
-            // richTextBox1
+            // chatView
             // 
-            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBox1.Location = new System.Drawing.Point(5, 4);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(495, 290);
-            this.richTextBox1.TabIndex = 1;
-            this.richTextBox1.Text = "";
+            this.chatView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.chatView.Location = new System.Drawing.Point(5, 4);
+            this.chatView.Name = "chatView";
+            this.chatView.Size = new System.Drawing.Size(495, 290);
+            this.chatView.TabIndex = 1;
+            this.chatView.Text = "";
             // 
             // inputMessageTextbox
             // 
@@ -111,17 +111,19 @@
             this.sendMessageButton.UseVisualStyleBackColor = true;
             this.sendMessageButton.Click += new System.EventHandler(this.sendMessageButton_Click);
             // 
-            // button3
+            // openFileButton
             // 
-            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button3.BackColor = System.Drawing.Color.Transparent;
-            this.button3.BackgroundImage = global::Chat_Client.Properties.Resources.attachment_icon;
-            this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button3.Location = new System.Drawing.Point(5, 299);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(33, 33);
-            this.button3.TabIndex = 5;
-            this.button3.UseVisualStyleBackColor = false;
+            this.openFileButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.openFileButton.BackColor = System.Drawing.Color.Transparent;
+            this.openFileButton.BackgroundImage = global::Chat_Client.Properties.Resources.attachment_icon;
+            this.openFileButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.openFileButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.openFileButton.Location = new System.Drawing.Point(5, 299);
+            this.openFileButton.Name = "openFileButton";
+            this.openFileButton.Size = new System.Drawing.Size(33, 33);
+            this.openFileButton.TabIndex = 5;
+            this.openFileButton.UseVisualStyleBackColor = false;
+            this.openFileButton.Click += new System.EventHandler(this.openFileButton_Click);
             // 
             // connectButton
             // 
@@ -156,10 +158,10 @@
             // panel1
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Controls.Add(this.button3);
+            this.panel1.Controls.Add(this.openFileButton);
             this.panel1.Controls.Add(this.sendMessageButton);
             this.panel1.Controls.Add(this.inputMessageTextbox);
-            this.panel1.Controls.Add(this.richTextBox1);
+            this.panel1.Controls.Add(this.chatView);
             this.panel1.Location = new System.Drawing.Point(7, 81);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(510, 341);
@@ -194,14 +196,14 @@
 
         private System.Windows.Forms.Label label1;
 
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button openFileButton;
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportChatHistoryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem infoToolStripMenuItem;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox chatView;
         private System.Windows.Forms.TextBox inputMessageTextbox;
         private System.Windows.Forms.Button connectButton;
 

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.IO;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,8 +34,29 @@ namespace Chat_Client
         public void SendMessage(string message)
         {
             NetworkStream stream = _client.GetStream();
-            byte[] buffer = Encoding.ASCII.GetBytes(message);
+            byte[] buffer = Encoding.ASCII.GetBytes(message + Environment.NewLine);
             stream.Write(buffer, 0, buffer.Length);
+        }
+        
+        public void SendImageMessage(Image image, System.Drawing.Imaging.ImageFormat format)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                // Convert Image to byte[]
+                image.Save(ms, format);
+                byte[] imageBytes = ms.ToArray();
+
+                // Convert byte[] to Base64 String
+                string base64String = Convert.ToBase64String(imageBytes);
+                
+                StringBuilder sb = new StringBuilder();
+                sb.Append("image;");
+                sb.Append(base64String);
+
+                NetworkStream stream = _client.GetStream();
+                byte[] buffer = Encoding.ASCII.GetBytes(sb + Environment.NewLine);
+                stream.Write(buffer, 0, buffer.Length);
+            }
         }
 
         /// <summary>
@@ -57,10 +80,10 @@ namespace Chat_Client
                 string data = Encoding.ASCII.GetString(buffer, 0, bytesRead);
                 messageBuilder.Append(data);
 
-                if (data.Length > 0)
+                if (data.EndsWith("\n")) // Check if received data ends with a newline
                 {
                     string receivedMessage = messageBuilder.ToString();
-                    OnMessageReceived(receivedMessage);
+                    OnMessageReceived(receivedMessage); // Remove the newline character before triggering the event
                     messageBuilder.Clear();
                 }
             }

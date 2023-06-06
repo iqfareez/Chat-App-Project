@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Chat_Server
 {
@@ -82,15 +83,15 @@ namespace Chat_Server
                 string data = Encoding.ASCII.GetString(buffer, 0, bytesRead);
                 messageBuilder.Append(data);
 
-                if (data.Length > 0)
+                if (data.EndsWith("\n"))
                 {
-                    string receivedMessage = messageBuilder.ToString().TrimEnd();
+                    string receivedMessage = messageBuilder.ToString();
+                    
+                    // TODO: Handle client information
+                    // eg; client.Client.RemoteEndPoint
 
                     // Raise the MessageReceived event
-                    OnMessageReceived($"{client.Client.RemoteEndPoint}: {receivedMessage}");
-
-                    byte[] response = Encoding.ASCII.GetBytes(receivedMessage.ToUpper() + Environment.NewLine);
-                    await stream.WriteAsync(response, 0, response.Length);
+                    OnMessageReceived(receivedMessage);
 
                     messageBuilder.Clear();
                 }
@@ -107,24 +108,42 @@ namespace Chat_Server
         }
         
         /// <summary>
-        /// Send message to the connected clients
+        /// Send message to the client
         /// </summary>
         /// <param name="client"></param>
         /// <param name="message"></param>
-        public void SendMessage(TcpClient client, string message)
+        public void SendTextMessage(TcpClient client, string message)
         {
-            try
-            {
+            
                 NetworkStream stream = client.GetStream();
-                byte[] buffer = Encoding.ASCII.GetBytes(message);
+                byte[] buffer = Encoding.ASCII.GetBytes(message + Environment.NewLine);
+                stream.Write(buffer, 0, buffer.Length);
+        }
+        
+        /// <summary>
+        /// Send image data to the client
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="message"></param>
+        public void SendImageMessage(TcpClient client, Image image, System.Drawing.Imaging.ImageFormat format)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                // Convert Image to byte[]
+                image.Save(ms, format);
+                byte[] imageBytes = ms.ToArray();
+
+                // Convert byte[] to Base64 String
+                string base64String = Convert.ToBase64String(imageBytes);
+                
+                StringBuilder sb = new StringBuilder();
+                sb.Append("image;");
+                sb.Append(base64String);
+
+                NetworkStream stream = client.GetStream();
+                byte[] buffer = Encoding.ASCII.GetBytes(sb + Environment.NewLine);
                 stream.Write(buffer, 0, buffer.Length);
             }
-            catch (Exception e)
-            {
-                // show error MessageBox
-                MessageBox.Show("Failed to send message. Perhaps the client has been disconnected?", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            
         }
         
         
