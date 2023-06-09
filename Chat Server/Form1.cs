@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace Chat_Server
 {
-    internal enum User
+    public enum User
     {
         Current,
         Other,
@@ -18,6 +18,8 @@ namespace Chat_Server
         private MyTcpServer _server;
         private int _clientCount;
         private string _selectedImageFileName;
+        private MyHistoryManager _myHistoryManager = new MyHistoryManager();
+        private Timer timer;
 
         public Form1()
         {
@@ -29,6 +31,11 @@ namespace Chat_Server
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            // Set up the timer control
+            timer = new Timer();
+            timer.Interval = 3000; // 3 seconds
+            timer.Tick += Timer_Tick;
+            
             // Hardcode the IP address and port for now
             // The client will be running on the same machine as the client
             _server = new MyTcpServer(IPAddress.Loopback.ToString(), 5050);
@@ -38,6 +45,15 @@ namespace Chat_Server
 
             // Start the server
             _ = _server.Start();
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            // Stop the timer
+            timer.Stop();
+        
+            // Restore the original text
+            statusBar1.Text = "";
         }
 
         private void OnMessageReceived(object sender, string message)
@@ -66,6 +82,8 @@ namespace Chat_Server
                 Bitmap myBitmap = new Bitmap(fileName);
                 AppendImageToChatView(myBitmap, User.Other);
                 
+                _myHistoryManager.AddMessage($"[Image] Sent an image", User.Other);
+                
                 chatView.ScrollToCaret();
 
                 return;
@@ -73,6 +91,7 @@ namespace Chat_Server
 
             // For normal message, append to the chat view
             AppendMessageToChatView(message.TrimEnd(), User.Other);
+            _myHistoryManager.AddMessage(message.TrimEnd(), User.Other);
             chatView.ScrollToCaret();
         }
 
@@ -93,6 +112,8 @@ namespace Chat_Server
 
                 inputMessageTextbox.Clear();
                 
+                _myHistoryManager.AddMessage($"[Image] Sent an image", User.Current);
+                
                 chatView.ScrollToCaret();
 
                 // restore the editing capability of the textbox
@@ -104,6 +125,7 @@ namespace Chat_Server
             // The requirement doesn't mention about handling multiple clients
             // so i think this implementation is OK
             AppendMessageToChatView(inputMessageTextbox.Text, User.Current);
+            _myHistoryManager.AddMessage(inputMessageTextbox.Text, User.Current);
             var client = _server.Clients.Last();
             _server.SendTextMessage(client, inputMessageTextbox.Text);
             
@@ -258,6 +280,24 @@ namespace Chat_Server
             {
                 e.SuppressKeyPress = true;
                 sendMessageButton.PerformClick();
+            }
+        }
+
+        private void exportFileHistoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var currentDateTimestamp = DateTime.Now.ToString("dd-MM-yyyy_HH-mm");
+            var data = _myHistoryManager.GetExportHistory();
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Text File (*.txt)|*.txt";
+            saveFileDialog.Title = "Save chat history";
+            saveFileDialog.FileName = $"ChatHistory-{currentDateTimestamp}.txt";
+            saveFileDialog.ShowDialog();
+            
+            if (saveFileDialog.FileName != "")
+            {
+                File.WriteAllText(saveFileDialog.FileName, data);
+                statusBar1.Text = $"Chat history exported to {saveFileDialog.FileName}";
+                timer.Start();
             }
         }
     }

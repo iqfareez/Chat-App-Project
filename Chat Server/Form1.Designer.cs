@@ -41,6 +41,7 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutAppToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.statusBar1 = new System.Windows.Forms.StatusBar();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -65,7 +66,7 @@
             this.chatView.Location = new System.Drawing.Point(9, 7);
             this.chatView.Name = "chatView";
             this.chatView.ReadOnly = true;
-            this.chatView.Size = new System.Drawing.Size(539, 298);
+            this.chatView.Size = new System.Drawing.Size(539, 322);
             this.chatView.TabIndex = 2;
             this.chatView.Text = "";
             // 
@@ -75,7 +76,7 @@
             this.openFileButton.BackColor = System.Drawing.Color.Transparent;
             this.openFileButton.BackgroundImage = global::Chat_Server.Properties.Resources.attachment_icon;
             this.openFileButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.openFileButton.Location = new System.Drawing.Point(5, 308);
+            this.openFileButton.Location = new System.Drawing.Point(7, 335);
             this.openFileButton.Name = "openFileButton";
             this.openFileButton.Size = new System.Drawing.Size(33, 33);
             this.openFileButton.TabIndex = 8;
@@ -85,7 +86,7 @@
             // sendMessageButton
             // 
             this.sendMessageButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.sendMessageButton.Location = new System.Drawing.Point(460, 311);
+            this.sendMessageButton.Location = new System.Drawing.Point(462, 338);
             this.sendMessageButton.Name = "sendMessageButton";
             this.sendMessageButton.Size = new System.Drawing.Size(88, 33);
             this.sendMessageButton.TabIndex = 7;
@@ -98,7 +99,7 @@
             this.inputMessageTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.inputMessageTextbox.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.inputMessageTextbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.inputMessageTextbox.Location = new System.Drawing.Point(44, 311);
+            this.inputMessageTextbox.Location = new System.Drawing.Point(46, 338);
             this.inputMessageTextbox.Name = "inputMessageTextbox";
             this.inputMessageTextbox.Size = new System.Drawing.Size(410, 28);
             this.inputMessageTextbox.TabIndex = 6;
@@ -125,6 +126,7 @@
             this.exportFileHistoryToolStripMenuItem.Name = "exportFileHistoryToolStripMenuItem";
             this.exportFileHistoryToolStripMenuItem.Size = new System.Drawing.Size(199, 24);
             this.exportFileHistoryToolStripMenuItem.Text = "Export File History";
+            this.exportFileHistoryToolStripMenuItem.Click += new System.EventHandler(this.exportFileHistoryToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
@@ -142,20 +144,28 @@
             // panel1
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.statusBar1);
             this.panel1.Controls.Add(this.openFileButton);
             this.panel1.Controls.Add(this.sendMessageButton);
             this.panel1.Controls.Add(this.inputMessageTextbox);
             this.panel1.Controls.Add(this.chatView);
             this.panel1.Location = new System.Drawing.Point(3, 91);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(561, 356);
+            this.panel1.Size = new System.Drawing.Size(561, 399);
             this.panel1.TabIndex = 10;
+            // 
+            // statusBar1
+            // 
+            this.statusBar1.Location = new System.Drawing.Point(0, 377);
+            this.statusBar1.Name = "statusBar1";
+            this.statusBar1.Size = new System.Drawing.Size(561, 22);
+            this.statusBar1.TabIndex = 9;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(565, 453);
+            this.ClientSize = new System.Drawing.Size(565, 496);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.menuStrip1);
@@ -171,6 +181,8 @@
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.StatusBar statusBar1;
 
         private System.Windows.Forms.Panel panel1;
 
