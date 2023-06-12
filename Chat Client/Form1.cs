@@ -249,5 +249,12 @@ namespace Chat_Client
                 File.WriteAllText(saveFileDialog.FileName, data);
             }
         }
+
+        private void infoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Show info dialog
+            var infoDialog = new FormAbout();
+            infoDialog.ShowDialog();
+        }
     }
 }

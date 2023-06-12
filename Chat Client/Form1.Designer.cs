@@ -80,8 +80,9 @@
             // infoToolStripMenuItem
             // 
             this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
-            this.infoToolStripMenuItem.Size = new System.Drawing.Size(113, 24);
+            this.infoToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.infoToolStripMenuItem.Text = "Info...";
+            this.infoToolStripMenuItem.Click += new System.EventHandler(this.infoToolStripMenuItem_Click);
             // 
             // chatView
             // 
