@@ -138,8 +138,9 @@
             // aboutAppToolStripMenuItem
             // 
             this.aboutAppToolStripMenuItem.Name = "aboutAppToolStripMenuItem";
-            this.aboutAppToolStripMenuItem.Size = new System.Drawing.Size(151, 24);
+            this.aboutAppToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.aboutAppToolStripMenuItem.Text = "About App";
+            this.aboutAppToolStripMenuItem.Click += new System.EventHandler(this.aboutAppToolStripMenuItem_Click);
             // 
             // panel1
             // 

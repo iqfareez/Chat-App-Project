@@ -300,5 +300,11 @@ namespace Chat_Server
                 timer.Start();
             }
         }
+
+        private void aboutAppToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormAbout formAbout = new FormAbout();
+            formAbout.ShowDialog();
+        }
     }
 }
