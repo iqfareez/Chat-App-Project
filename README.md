@@ -9,12 +9,11 @@ Software Engineering SEM 2, 2022/2023.
 ## Requirements
 
 - [x] Bi-directional chatting over TCP
-- [ ] Able to send images
-- [ ] Saving the chat history.
+- [x] Able to send images
+- [x] Saving the chat history.
 
-[//]: # (## Features)
+## Features
 
-[//]: # ()
-[//]: # (- [ ] <kbd>Enter</kbd> to send message)
 
-[//]: # (- )
+- <kbd>Enter</kbd> to send message
+- Responsive layout
