@@ -145,7 +145,5 @@ namespace Chat_Server
                 stream.Write(buffer, 0, buffer.Length);
             }
         }
-        
-        
     }
 }

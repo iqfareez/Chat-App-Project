@@ -34,19 +34,15 @@ namespace Chat_Client
         {
             if (message.StartsWith("image;"))
             {
-                // strip start
+                // strip start to get the base64 string only
                 message = message.Replace("image;", "");
 
-                var fileFormat = MyFileUtility.GetFileExtension(message);
-
-                // decode the image and save to temp directory
-                string fileName = Guid.NewGuid() + $".{fileFormat}";
-                fileName = Path.Combine(Path.GetTempPath(), fileName);
-                File.WriteAllBytes(fileName, Convert.FromBase64String(message));
+                // Convert base64 to Image object. Ref: https://stackoverflow.com/a/21325711/13617136
+                var img = Image.FromStream(new MemoryStream(Convert.FromBase64String(message)));
+                Bitmap imgBitmap = new Bitmap(img);
 
                 // display the image in the Chat View
-                Bitmap myBitmap = new Bitmap(fileName);
-                AppendImageToChatView(myBitmap, User.Other);
+                AppendImageToChatView(imgBitmap, User.Other);
 
                 // record the image in the history
                 _historyManager.AddMessage($"[Image] Sent an image", User.Other);
@@ -111,6 +107,10 @@ namespace Chat_Client
                 
                 // restore editing capability of the textbox
                 inputMessageTextbox.ReadOnly = false;
+                
+                // reset the button
+                openFileButton.BackgroundImage = Properties.Resources.attachment_icon;
+                _selectedImageFileName = null;
             }
             else
             {
@@ -126,11 +126,24 @@ namespace Chat_Client
 
         private void openFileButton_Click(object sender, EventArgs e)
         {
+            // check if the button is already in 'cancel' mode
+            if (_selectedImageFileName != null)
+            {
+                _selectedImageFileName = null;
+                openFileButton.BackgroundImage = Properties.Resources.attachment_icon;
+                
+                // openFileButton.BackgroundImageLayout = ImageLayout.Zoom;
+                inputMessageTextbox.Text = "";
+                inputMessageTextbox.ReadOnly = false;
+                return;
+            }
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Title = "Select image";
             fileDialog.Filter = "Image Files (*.bmp;*.jpg;*.jpeg,*.png)|*.BMP;*.JPG;*.JPEG;*.PNG";
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
+                // change the icon to cancel button
+                openFileButton.BackgroundImage = Properties.Resources.cancel_icon;
                 // show only the filename to save textfield space
                 inputMessageTextbox.Text = $"[Image] {fileDialog.SafeFileName}";
                 inputMessageTextbox.ReadOnly = true;

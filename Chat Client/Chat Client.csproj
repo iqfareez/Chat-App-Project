@@ -59,7 +59,6 @@
           <DependentUpon>FormAbout.cs</DependentUpon>
         </Compile>
         <Compile Include="MyChatClient.cs" />
-        <Compile Include="MyFileUtility.cs" />
         <Compile Include="MyHistoryManager.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
@@ -94,6 +93,7 @@
     <ItemGroup>
       <Content Include="Resources\attachment_icon.png" />
       <Content Include="Resources\attachment_icon_small.png" />
+      <Content Include="Resources\cancel_icon.png" />
       <Content Include="Resources\client_icon.png" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
