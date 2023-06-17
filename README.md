@@ -6,14 +6,21 @@
 
 Software Engineering SEM 2, 2022/2023.
 
+![Screenshot 2023-06-17 172803](https://github.com/iqfareez/Chat-App-Project/assets/60868965/0da4b060-597d-4860-bb6f-1b1f0bfc58b5)
+
+[[Video demo]](https://youtu.be/S-HJdFJypIw)
+
 ## Requirements
 
 - [x] Bi-directional chatting over TCP
 - [x] Able to send images
 - [x] Saving the chat history.
 
-## Features
-
+## Extra Features
 
 - <kbd>Enter</kbd> to send message
 - Responsive layout
+
+## Limitations
+
+- Only handle one client
