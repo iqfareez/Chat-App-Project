@@ -68,18 +68,15 @@ namespace Chat_Server
 
             if (message.StartsWith("image;"))
             {
-                // strip start
+                // strip 'image;' to get the base64 string only
                 message = message.Replace("image;", "");
 
-                var fileFormat = MyFileUtility.GetFileExtension(message);
-
-                // decode the image and save to temp directory
-                string fileName = Guid.NewGuid() + $".{fileFormat}";
-                fileName = Path.Combine(Path.GetTempPath(), fileName);
-                File.WriteAllBytes(fileName, Convert.FromBase64String(message));
+                // Convert base64 to Image object. Ref: https://stackoverflow.com/a/21325711/13617136
+                var img = Image.FromStream(new MemoryStream(Convert.FromBase64String(message)));
+                Bitmap imgBitmap = new Bitmap(img);
 
                 // display the image in the Chat View
-                Bitmap myBitmap = new Bitmap(fileName);
+                Bitmap myBitmap = new Bitmap(imgBitmap);
                 AppendImageToChatView(myBitmap, User.Other);
                 
                 _myHistoryManager.AddMessage($"[Image] Sent an image", User.Other);

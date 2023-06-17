@@ -59,7 +59,6 @@
           <DependentUpon>FormAbout.cs</DependentUpon>
         </Compile>
         <Compile Include="MyChatHistory.cs" />
-        <Compile Include="MyFileUtility.cs" />
         <Compile Include="MyTcpServer.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
