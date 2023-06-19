@@ -98,7 +98,7 @@ namespace Chat_Server
             if (string.IsNullOrEmpty(inputMessageTextbox.Text)) return;
 
             // Handle send image
-            if (inputMessageTextbox.Text.StartsWith("[Image]"))
+            if (inputMessageTextbox.Text.StartsWith("[Image]") && _selectedImageFileName != null)
             {
                 Image image = Image.FromFile(_selectedImageFileName);
                 _server.SendImageMessage(_server.Clients.Last(), image, image.RawFormat);
@@ -115,6 +115,7 @@ namespace Chat_Server
 
                 // restore the editing capability of the textbox
                 inputMessageTextbox.ReadOnly = false;
+                _selectedImageFileName = null;
                 return;
             }
 
@@ -149,6 +150,11 @@ namespace Chat_Server
             }
         }
 
+        /// <summary>
+        /// Receieve command that the backend are passing to the frontend
+        /// </summary>
+        /// <param name="message"></param>
+        /// <exception cref="Exception"></exception>
         private void ProcessCommandFromServerBackend(string message)
         {
             if (!message.Contains("[SERVER]")) throw new Exception("Invalid command");

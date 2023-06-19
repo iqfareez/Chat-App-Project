@@ -96,7 +96,7 @@ namespace Chat_Client
             if (string.IsNullOrEmpty(inputMessageTextbox.Text)) return;
 
             // Handle send image
-            if (inputMessageTextbox.Text.StartsWith("[Image]"))
+            if (inputMessageTextbox.Text.StartsWith("[Image]") && _selectedImageFileName != null)
             {
                 Image image = Image.FromFile(_selectedImageFileName);
                 _chatClient.SendImageMessage(image, image.RawFormat);
