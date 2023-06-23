@@ -1,5 +1,4 @@
-﻿![Project Status](https://img.shields.io/badge/status-work%20in%20progress-yellow.svg?style=for-the-badge)
-![.Net](https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white)
+﻿![.Net](https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white)
 ![C#](https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white)
 
 # Chat App Project
@@ -19,8 +18,8 @@ Software Engineering SEM 2, 2022/2023.
 ## Extra Features
 
 - <kbd>Enter</kbd> to send message
-- Responsive layout (Able ro resize window without breaking the UI)
+- Responsive layout (Able to resize window without breaking the UI)
 
 ## Limitations
 
-- Only handle one client
+- Only handle one (last connected) client 
