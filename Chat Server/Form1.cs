@@ -234,8 +234,8 @@ namespace Chat_Server
         {
             chatView.Invoke((MethodInvoker)(() =>
             {
-                int maxWidth = 500;
-                int maxHeight = 500;
+                int maxWidth = 300;
+                int maxHeight = 300;
 
                 int newWidth, newHeight;
                 double aspectRatio = (double)bitmap.Width / bitmap.Height;
