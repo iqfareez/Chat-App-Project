@@ -19,7 +19,7 @@ Software Engineering SEM 2, 2022/2023.
 ## Extra Features
 
 - <kbd>Enter</kbd> to send message
-- Responsive layout
+- Responsive layout (Able ro resize window without breaking the UI)
 
 ## Limitations
 
